@@ -2,7 +2,6 @@
 
 [![CircleCI][build-badge]][build]
 [![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
 
 musical notation components built on top of [vexflow](https://github.com/0xfe/vexflow).
 

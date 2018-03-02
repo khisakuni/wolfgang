@@ -44,7 +44,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/npm/npm.git"
+    "url": "https://github.com/khisakuni/wolfgang.git"
   },
   "keywords": [
     "react-component"

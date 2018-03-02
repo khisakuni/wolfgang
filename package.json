@@ -1,6 +1,6 @@
 {
   "name": "schubert",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "schubert React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -38,8 +38,8 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
-  "author": "",
-  "homepage": "",
+  "author": "Kohei Hisakuni <kohei@alkematic.com> (https://khisakuni.github.io/)",
+  "homepage": "https://github.com/khisakuni/schubert",
   "license": "MIT",
   "repository": "",
   "keywords": [

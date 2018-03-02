@@ -1,7 +1,7 @@
 {
-  "name": "schubert",
+  "name": "wolfgang",
   "version": "0.1.0",
-  "description": "schubert React component",
+  "description": "Wolfgang React component",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Vex from 'vexflow'
 import _ from 'lodash'
 import models from '../../models'
+import Voice from '../../Voice'
+import Clef from '../../Clef'
 
 class Measure extends Component {
   constructor(props) {
@@ -11,6 +13,9 @@ class Measure extends Component {
     this.renderVoices = this.renderVoices.bind(this)
     this.getVoiceAtIndex = this.getVoiceAtIndex.bind(this)
     this.updateVoiceAtIndex = this.updateVoiceAtIndex.bind(this)
+    this.voiceComponents = this.voiceComponents.bind(this)
+    this.renderClefs = this.renderClefs.bind(this)
+    this.clefComponents = this.clefComponents.bind(this)
     this.measure = new models.Measure()
   }
 
@@ -24,7 +29,11 @@ class Measure extends Component {
   }
 
   voiceComponents() {
-    return React.Children.toArray(this.props.children)
+    return React.Children.toArray(this.props.children).filter(component => component.type === Voice)
+  }
+
+  clefComponents() {
+    return React.Children.toArray(this.props.children).filter(component => component.type === Clef)
   }
 
   renderVoices() {
@@ -40,6 +49,12 @@ class Measure extends Component {
         staffId: this.props.staffId,
         sheetId: this.props.sheetId,
       })
+    })
+  }
+
+  renderClefs() {
+    return React.Children.map(this.clefComponents(), (clefComponent, i) => {
+      return React.cloneElement(clefComponent, { measureId: this.measure.id, key: clefComponent.props.type })
     })
   }
 
@@ -60,7 +75,10 @@ class Measure extends Component {
 
   render() {
     return (
-      <div>{this.renderVoices()}</div>
+      <div>
+        {this.renderClefs()}
+        {this.renderVoices()}
+      </div>
     )
   }
 }

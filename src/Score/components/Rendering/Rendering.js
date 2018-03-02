@@ -4,7 +4,7 @@ import Vex from 'vexflow'
 export default class Rendering extends Component {
   componentDidUpdate() {
 
-    const { sheets, measures, voices, notes } = this.props
+    const { sheets, measures, voices, notes, clefs } = this.props
 
     const renderingEl = document.getElementById('rendering')
     while (renderingEl.firstChild) {
@@ -26,6 +26,15 @@ export default class Rendering extends Component {
          const measure = measures[measureId]
          if (measure.sheetId === sheetId) {
            const m = new Vex.Flow.Stave(measure.x, measure.y, measure.width)
+
+           // Render clefs
+           Object.keys(clefs).forEach((clefId) => {
+             const clef = clefs[clefId]
+             if (clef.measureId === measure.id) {
+               m.addClef(clef.type)
+             }
+           })
+
            m.setContext(context).draw()
 
            const vs = []

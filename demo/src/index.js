@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import { Score, Sheet, Staff, Measure, Voice, Note } from '../../src'
+import { Score, Sheet, Staff, Measure, Voice, Note, Clef } from '../../src'
 
 class Demo extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { changeNote: false, showVoice: false, showMeasure: false }
+    this.state = { changeNote: false, showVoice: false, showMeasure: false, clef: 'treble' }
     this.changeNote = this.changeNote.bind(this)
     this.showVoice = this.showVoice.bind(this)
     this.renderVoice = this.renderVoice.bind(this)
@@ -14,6 +14,7 @@ class Demo extends Component {
     this.renderMeasure = this.renderMeasure.bind(this)
     this.showStaff = this.showStaff.bind(this)
     this.renderStaff = this.renderStaff.bind(this)
+    this.changeClef = this.changeClef.bind(this)
   }
 
   changeNote() {
@@ -71,6 +72,14 @@ class Demo extends Component {
     }
   }
 
+  changeClef() {
+    if (this.state.clef === 'treble') {
+      this.setState({ clef: 'bass' })
+    } else {
+      this.setState({ clef: 'treble' })
+    }
+  }
+
   render() {
     return <div>
       <h1>schubert Demo</h1>
@@ -78,10 +87,12 @@ class Demo extends Component {
       <button onClick={this.showVoice}>Show Voice</button>
       <button onClick={this.showMeasure}>Show Measure</button>
       <button onClick={this.showStaff}>Show Staff</button>
+      <button onClick={this.changeClef}>Change Clef</button>
       <Score>
         <Sheet>
           <Staff>
             <Measure>
+              <Clef type={this.state.clef} />
               <Voice>
                 <Note value={this.state.changeNote ? 'b/4' : 'c/4'} duration="q" />
                 <Note value="f/4" duration="q" />

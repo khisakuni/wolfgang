@@ -4,67 +4,8 @@ import staves from './staves'
 import measures from './measures'
 import voices from './voices'
 import notes from './notes'
+import clefs from './clefs'
 
-/*
-
-vvv GOOD vvv
-sheets: { 0: {}, 1: {} }
-
-staves: {
-  0: {
-    id: ...,
-  },
-  1: {
-    id: ...,
-  }
-}
-
-measures: {
-  0: {
-    id: ...,
-    sheetId: ...,
-    staffId: ...,
-  },
-  1: {
-    id: ...,
-    sheetId: ...,
-    staffId: ...,
-  }
-}
-
-voices: {
-  0: {
-    id: ...,
-    sheetId: ...,
-    staffId: ...,
-    measureId: ...,
-  },
-  1: {
-    id: ...,
-    sheetId: ...,
-    staffId: ...,
-    measureId: ...,
-  },
-}
-
-notes: {
-  0: {
-    id: ...,
-    voiceId: ...,
-    measureId: ...,
-    staffId: ...,
-    sheetId: ...,
-  },
-  1: {
-    id: ...,
-    voiceId: ...,
-    measureId: ...,
-    staffId: ...,
-    sheetId: ...,
-  },
-}
-
-*/
 
 export default combineReducers({
   sheets,
@@ -72,4 +13,5 @@ export default combineReducers({
   measures,
   voices,
   notes,
+  clefs,
 })

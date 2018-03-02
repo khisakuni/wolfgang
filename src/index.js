@@ -1,9 +1,6 @@
-import React, {Component} from 'react'
-
-export default class extends Component {
-  render() {
-    return <div>
-      <h2>Welcome to React components</h2>
-    </div>
-  }
-}
+export Note from './Note'
+export Voice from './Voice'
+export Measure from './Measure'
+export Staff from './Staff'
+export Sheet from './Sheet'
+export Score from './Score'

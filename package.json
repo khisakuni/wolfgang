@@ -41,7 +41,10 @@
   "author": "Kohei Hisakuni <kohei@alkematic.com> (https://khisakuni.github.io/)",
   "homepage": "https://github.com/khisakuni/schubert",
   "license": "MIT",
-  "repository": "",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/npm/npm.git"
+  },
   "keywords": [
     "react-component"
   ],

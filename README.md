@@ -1,4 +1,4 @@
-# schubert
+# Wolfgang
 
 [![CircleCI][build-badge]][build]
 [![npm package][npm-badge]][npm]

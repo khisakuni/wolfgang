@@ -84,8 +84,8 @@ class Demo extends Component {
             <Measure>
               <Voice>
                 <Note value={this.state.changeNote ? 'b/4' : 'c/4'} duration="q" />
-                <Note value="c/4" duration="q" />
-                <Note value="c/4" duration="q" />
+                <Note value="f/4" duration="q" />
+                <Note value="g/4" duration="q" />
                 <Note value="c/4" duration="q" />
               </Voice>
               {this.renderVoice()}

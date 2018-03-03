@@ -11,8 +11,6 @@ class Measure extends Component {
 
     this.state = { voices: [] }
     this.renderVoices = this.renderVoices.bind(this)
-    this.getVoiceAtIndex = this.getVoiceAtIndex.bind(this)
-    this.updateVoiceAtIndex = this.updateVoiceAtIndex.bind(this)
     this.voiceComponents = this.voiceComponents.bind(this)
     this.renderClefs = this.renderClefs.bind(this)
     this.clefComponents = this.clefComponents.bind(this)
@@ -43,8 +41,6 @@ class Measure extends Component {
         beatValue: 4,
         addVoice: this.addVoice,
         index: i,
-        updateVoiceAtIndex: this.updateVoiceAtIndex,
-        getVoiceAtIndex: this.getVoiceAtIndex,
         measureId: this.measure.id,
         staffId: this.props.staffId,
         sheetId: this.props.sheetId,
@@ -56,21 +52,6 @@ class Measure extends Component {
     return React.Children.map(this.clefComponents(), (clefComponent, i) => {
       return React.cloneElement(clefComponent, { measureId: this.measure.id, key: clefComponent.props.type })
     })
-  }
-
-  updateVoiceAtIndex(index, voice) {
-		const voices = this.state.voices.slice()
-		voices[index] = voice
-		this.setState({ voices })
-  }
-
-  getVoiceAtIndex(index) {
-    if (index >= this.state.voices.length) {
-      // throw error?
-      return
-    }
-
-    return this.state.voices[index]
   }
 
   render() {

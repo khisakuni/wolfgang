@@ -93,6 +93,7 @@ class Demo extends Component {
           <Staff>
             <Measure>
               <Clef type={this.state.clef} />
+              {/* <TimeSignature /> */}
               <Voice>
                 <Note value={this.state.changeNote ? 'b/4' : 'c/4'} duration="q" />
                 <Note value="f/4" duration="q" />

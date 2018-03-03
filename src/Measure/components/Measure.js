@@ -4,6 +4,7 @@ import _ from 'lodash'
 import models from '../../models'
 import Voice from '../../Voice'
 import Clef from '../../Clef'
+import TimeSignature from '../../TimeSignature'
 
 class Measure extends Component {
   constructor(props) {
@@ -14,6 +15,8 @@ class Measure extends Component {
     this.voiceComponents = this.voiceComponents.bind(this)
     this.renderClefs = this.renderClefs.bind(this)
     this.clefComponents = this.clefComponents.bind(this)
+    this.renderTimeSignatues = this.renderTimeSignatures.bind(this)
+    this.timeSignatureComponents = this.timeSignatureComponents.bind(this)
     this.measure = new models.Measure()
   }
 
@@ -49,8 +52,19 @@ class Measure extends Component {
   }
 
   renderClefs() {
-    return React.Children.map(this.clefComponents(), (clefComponent, i) => {
+    return React.Children.map(this.clefComponents(), (clefComponent) => {
       return React.cloneElement(clefComponent, { measureId: this.measure.id, key: clefComponent.props.type })
+    })
+  }
+
+  timeSignatureComponents() {
+    return React.Children.toArray(this.props.children).filter(component => component.type === TimeSignature)
+  }
+
+  renderTimeSignatures() {
+    return React.Children.map(this.timeSignatureComponents(), (component) => {
+      const props = { measureId: this.measure.id, key: component.props.value, value: component.props.value }
+      return React.cloneElement(component, props)
     })
   }
 
@@ -59,8 +73,28 @@ class Measure extends Component {
       <div>
         {this.renderClefs()}
         {this.renderVoices()}
+        {this.renderTimeSignatures()}
       </div>
     )
+  }
+}
+
+Measure.defaultProps = {
+  addMeasure: () => {},
+  deleteMeasure: () => {},
+}
+
+Measure.propTypes = {
+  children: (props, propName, componentName) => {
+    const validTypes = { [Voice]: true, [Clef]: true, [TimeSignature]: true }
+    const prop = props[propName]
+    let error
+    React.Children.forEach(prop, (child) => {
+      if(child && !validTypes[child.type]) {
+        error = new Error(`${componentName} children must be of types Voice, Clef, or TimeSignature`)
+      }
+    })
+    return error
   }
 }
 

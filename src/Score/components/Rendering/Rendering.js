@@ -4,7 +4,7 @@ import Vex from 'vexflow'
 export default class Rendering extends Component {
   componentDidUpdate() {
 
-    const { sheets, measures, voices, notes, clefs } = this.props
+    const { sheets, measures, voices, notes, clefs, timeSignatures } = this.props
 
     const renderingEl = document.getElementById('rendering')
     while (renderingEl.firstChild) {
@@ -35,7 +35,17 @@ export default class Rendering extends Component {
              }
            })
 
-           m.setContext(context).draw()
+           // Render time signatures
+           let hasTimeSignature = false
+           Object.keys(timeSignatures).forEach((timeSignatureId) => {
+             const timeSignature = timeSignatures[timeSignatureId]
+             if (timeSignature.measureId === measure.id) {
+               m.addTimeSignature(timeSignature.value)
+               hasTimeSignature = true
+             }
+           })
+
+           //m.setContext(context).draw()
 
            const vs = []
            // Render voices
@@ -58,8 +68,11 @@ export default class Rendering extends Component {
              }
            })
 
+           m.setContext(context).draw()
+
            if (vs.length > 0) {
-             const formatter = new Vex.Flow.Formatter().joinVoices(vs).format(vs, measure.width)
+             const offset = hasTimeSignature ? m.getNoteStartX() : 0
+             const formatter = new Vex.Flow.Formatter().joinVoices(vs).format(vs, measure.width - offset)
              vs.forEach((v) => { v.draw(context, m) })
            }
          }

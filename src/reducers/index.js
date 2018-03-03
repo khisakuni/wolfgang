@@ -5,7 +5,7 @@ import measures from './measures'
 import voices from './voices'
 import notes from './notes'
 import clefs from './clefs'
-
+import timeSignatures from './time-signatures'
 
 export default combineReducers({
   sheets,
@@ -14,4 +14,5 @@ export default combineReducers({
   voices,
   notes,
   clefs,
+  timeSignatures,
 })

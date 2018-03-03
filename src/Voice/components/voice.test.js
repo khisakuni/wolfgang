@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import sinon from 'sinon'
 import Voice from './Voice'
 import Note from '../../Note'
@@ -42,18 +42,18 @@ describe('<Voice />', () => {
     expect(wrapper.find(Note).length).toBe(1)
   })
 
-  it('does not render if children are not Note components', () => {
-    console.error = () => {}
+  it('raises error if children are not Note components', () => {
+    const printError = console.error
+    console.error = sinon.spy()
 
     const wrapper = shallow((
-      <div>
-        <Voice>
-          <h1>Hi there</h1>
-        </Voice>
-      </div>
+      <Voice>
+        <h1>Hi there</h1>
+      </Voice>
     ))
 
-    expect(wrapper.find(Voice).length).toBe(1)
+    expect(console.error.calledOnce).toBe(true)
+    console.error = printError
   })
 })
 

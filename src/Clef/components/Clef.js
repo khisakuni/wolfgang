@@ -10,12 +10,10 @@ class Clef extends Component {
 
   componentDidMount() {
     this.clef = new models.Clef({ id: this.clef.id, ...this.props })
-    console.log('MOUNTING')
     this.props.addClef(this.clef)
   }
 
   componentWillUnmount() {
-    console.log('UNMOUNTING')
     this.props.deleteClef(this.clef)
   }
 

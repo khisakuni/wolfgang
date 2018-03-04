@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { orderObjectValuesByIndex, deleteById } from './helpers'
 
 const ADD_MEASURE = 'ADD_MEASURE'
 const DELETE_MEASURE = 'DELETE_MEASURE'
@@ -19,27 +19,15 @@ export function deleteMeasure(measure) {
   }
 }
 
-function orderByIndex(measures) {
-  return _.values(measures).sort((a, b) => a.index - b.index).reduce((acc, measure) => {
-    acc[measure.id] = measure
-    return acc
-  }, {})
-}
-
 export const initialState = {}
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_MEASURE:
-      return orderByIndex({ ...state, ...payload })
+      return orderObjectValuesByIndex({ ...state, ...payload })
     case DELETE_MEASURE:
-      const ids = Object.keys(state).filter(id => id !== payload.id)
-      const measures = ids.reduce(((acc, id) => {
-        acc[id] = state[id]
-        return acc
-      }), {})
-      return orderByIndex(measures)
+      return orderObjectValuesByIndex(deleteById(state, payload.id))
     default:
-      return orderByIndex(state)
+      return orderObjectValuesByIndex(state)
   }
 }

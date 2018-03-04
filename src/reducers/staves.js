@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { orderObjectValuesByIndex, deleteById } from './helpers'
 
 const ADD_STAFF = 'ADD_STAFF'
 const DELETE_STAFF = 'DELETE_STAFF'
@@ -19,27 +19,15 @@ export function deleteStaff(staff) {
   }
 }
 
-function orderByIndex(staves) {
-  return _.values(staves).sort((a, b) => a.index - b.index).reduce((acc, staff) => {
-    acc[staff.id] = staff
-    return acc
-  }, {})
-}
-
 export const initialState = {}
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_STAFF:
-      return orderByIndex({ ...state, ...payload })
+      return orderObjectValuesByIndex({ ...state, ...payload })
     case DELETE_STAFF:
-      const ids = Object.keys(state).filter(id => id !== payload.id)
-      const staves = ids.reduce(((acc, id) => {
-        acc[id] = state[id]
-        return acc
-      }), {})
-      return orderByIndex(staves)
+      return orderObjectValuesByIndex(deleteById(state, payload.id))
     default:
-      return orderByIndex(state)
+      return orderObjectValuesByIndex(state)
   }
 }

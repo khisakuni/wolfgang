@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { orderObjectValuesByIndex, deleteById } from './helpers'
 
 const ADD_VOICE = 'ADD_VOICE'
 const DELETE_VOICE = 'DELETE_VOICE'
@@ -19,27 +19,15 @@ export function deleteVoice(voice) {
   }
 }
 
-function orderByIndex(voices) {
-  return _.values(voices).sort((a, b) => a.index - b.index).reduce((acc, voice) => {
-    acc[voice.id] = voice
-    return acc
-  }, {})
-}
-
 export const initialState = {}
 
 export default (state = initialState, { type, payload}) => {
   switch (type) {
     case ADD_VOICE:
-      return orderByIndex({ ...state, ...payload })
+      return orderObjectValuesByIndex({ ...state, ...payload })
     case DELETE_VOICE:
-      const ids = Object.keys(state).filter(id => id !== payload.id)
-      const voices = ids.reduce(((acc, id) => {
-        acc[id] = state[id]
-        return acc
-      }), {})
-      return orderByIndex(voices)
+      return orderObjectValuesByIndex(deleteById(state, payload.id))
     default:
-      return orderByIndex(state)
+      return orderObjectValuesByIndex(state)
   }
 }

@@ -20,7 +20,7 @@ describe('reducers/voices', () => {
       it('returns DELETE_VOICE action', () => {
         const expected = {
           type: types.DELETE_VOICE,
-          payload: { id: voice.id }
+          payload: voice,
         }
 
         expect(deleteVoice(voice)).toEqual(expected)

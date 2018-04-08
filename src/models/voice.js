@@ -8,4 +8,5 @@ export default function Voice(params = {}) {
   this.measureId = params.measureId
   this.staffId = params.staffId
   this.sheetId = params.sheetId
+  this.notes = params.notes || []
 }

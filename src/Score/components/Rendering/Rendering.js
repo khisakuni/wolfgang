@@ -1,92 +1,90 @@
-import React, { Component } from 'react'
-import Vex from 'vexflow'
+import React, { Component } from "react";
+import Vex from "vexflow";
+import { sheetsForScore } from "./selectors";
 
 export default class Rendering extends Component {
   componentDidUpdate() {
+    const {
+      sheets,
+      measures,
+      voices,
+      notes,
+      clefs,
+      timeSignatures
+    } = this.props;
 
-    const { sheets, measures, voices, notes, clefs, timeSignatures } = this.props
-
-    const renderingEl = document.getElementById('rendering')
+    const renderingEl = document.getElementById("rendering");
     while (renderingEl.firstChild) {
-      renderingEl.removeChild(renderingEl.firstChild)
+      renderingEl.removeChild(renderingEl.firstChild);
     }
+    sheetsForScore(this.props).forEach(sheet => {
+      const newEl = document.createElement("div");
+      newEl.setAttribute("id", sheet.id);
+      renderingEl.appendChild(newEl);
+      const renderer = new Vex.Flow.Renderer(
+        newEl,
+        Vex.Flow.Renderer.Backends.SVG
+      );
+      renderer.resize(sheet.height, sheet.width);
+      const context = renderer.getContext();
 
-     Object.keys(sheets).forEach((sheetId) => {
-       // Render sheets
-       const sheet = sheets[sheetId]
-       const newEl = document.createElement('div')
-       newEl.setAttribute('id', sheetId)
-       renderingEl.appendChild(newEl)
-       const renderer = new Vex.Flow.Renderer(newEl, Vex.Flow.Renderer.Backends.SVG)
-       renderer.resize(sheet.height, sheet.width)
-       const context = renderer.getContext()
+      sheet.staves.forEach(staff => {
+        staff.measures.forEach(measure => {
+          const m = new Vex.Flow.Stave(measure.x, measure.y, measure.width);
 
-       // Render measures
-       Object.keys(measures).forEach((measureId) => {
-         const measure = measures[measureId]
-         if (measure.sheetId === sheetId) {
-           const m = new Vex.Flow.Stave(measure.x, measure.y, measure.width)
+          measure.clefs.forEach(clef => {
+            m.addClef(clef.type);
+          });
 
-           // Render clefs
-           Object.keys(clefs).forEach((clefId) => {
-             const clef = clefs[clefId]
-             if (clef.measureId === measure.id) {
-               m.addClef(clef.type)
-             }
-           })
+          let hasTimeSignature = false;
+          measure.timeSignatures.forEach(timeSignature => {
+            hasTimeSignature = true;
+            m.addTimeSignature(timeSignature.value);
+          });
 
-           // Render time signatures
-           let hasTimeSignature = false
-           Object.keys(timeSignatures).forEach((timeSignatureId) => {
-             const timeSignature = timeSignatures[timeSignatureId]
-             if (timeSignature.measureId === measure.id) {
-               m.addTimeSignature(timeSignature.value)
-               hasTimeSignature = true
-             }
-           })
+          const voices = [];
+          measure.voices.forEach(voice => {
+            const v = new Vex.Flow.Voice({
+              clef: "treble",
+              num_beats: voice.numBeats,
+              beat_value: voice.beatValue
+            });
 
-           //m.setContext(context).draw()
+            const notes = [];
+            voice.notes.forEach(note => {
+              notes.push(
+                new Vex.Flow.StaveNote({
+                  keys: [note.value],
+                  duration: note.duration
+                })
+              );
+            });
+            v.addTickables(notes);
+            voices.push(v);
+          });
 
-           const vs = []
-           // Render voices
-           Object.keys(voices).forEach((voiceId) => {
-             const voice = voices[voiceId]
-             if (voice.measureId === measure.id) {
-               const v = new Vex.Flow.Voice({ clef: 'treble', num_beats: voice.numBeats, beat_value: voice.beatValue })
+          m.setContext(context).draw();
 
-               const ns = []
-               // Render notes
-               Object.keys(notes).forEach((noteId) => {
-                 const note = notes[noteId]
-                 if (note.voiceId === voiceId) {
-                   ns.push(new Vex.Flow.StaveNote({ keys:[note.value], duration: note.duration }))
-                 }
-               })
-
-               v.addTickables(ns)
-               vs.push(v)
-             }
-           })
-
-           m.setContext(context).draw()
-
-           if (vs.length > 0) {
-             const offset = hasTimeSignature ? m.getNoteStartX() : 0
-             const formatter = new Vex.Flow.Formatter().joinVoices(vs).format(vs, measure.width - offset)
-             vs.forEach((v) => { v.draw(context, m) })
-           }
-         }
-       })
-     })
-   }
+          if (voices.length > 0) {
+            const offset = hasTimeSignature ? m.getNoteStartX() : 0;
+            const formatter = new Vex.Flow.Formatter()
+              .joinVoices(voices)
+              .format(voices, measure.width - offset);
+            voices.forEach(voice => {
+              voice.draw(context, m);
+            });
+          }
+        });
+      });
+    });
+  }
 
   render() {
     return (
       <div>
         {this.props.children}
-        <div id="rendering">
-        </div>
+        <div id="rendering" />
       </div>
-    )
+    );
   }
 }

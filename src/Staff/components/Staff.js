@@ -12,7 +12,7 @@ class Staff extends Component {
   }
 
   componentDidMount() {
-    this.props.addStaff({ id: this.id, sheedId: this.props.sheetId, index: this.props.index })
+    this.props.addStaff({ id: this.id, sheetId: this.props.sheetId, index: this.props.index })
   }
 
   componentWillUnmount() {

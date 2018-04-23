@@ -1,11 +1,14 @@
-import { connect } from 'react-redux'
-import TimeSignature from './components/TimeSignature'
-import { addTimeSignature, deleteTimeSignature } from '../reducers/time-signatures'
+import { connect } from "react-redux";
+import TimeSignature from "./components/TimeSignature";
+import {
+  addTimeSignature,
+  deleteTimeSignature
+} from "../reducers/time-signatures";
 
-const mapStateToProps = ({ timeSignatures }) => ({ timeSignatures })
+const mapStateToProps = ({ timeSignatures }) => ({ timeSignatures });
 const mapDispatchToProps = {
   addTimeSignature,
-  deleteTimeSignature,
-}
+  deleteTimeSignature
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimeSignature)
+export default connect(mapStateToProps, mapDispatchToProps)(TimeSignature);

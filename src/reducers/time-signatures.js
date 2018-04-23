@@ -1,33 +1,33 @@
-const ADD_TIME_SIGNATURE = 'ADD_TIME_SIGNATURE'
-const DELETE_TIME_SIGNATURE = 'DELETE_TIME_SIGNATURE'
+const ADD_TIME_SIGNATURE = "ADD_TIME_SIGNATURE";
+const DELETE_TIME_SIGNATURE = "DELETE_TIME_SIGNATURE";
 
 export const types = {
   ADD_TIME_SIGNATURE,
-  DELETE_TIME_SIGNATURE,
-}
+  DELETE_TIME_SIGNATURE
+};
 
-export const addTimeSignature = (timeSignature) => ({
+export const addTimeSignature = timeSignature => ({
   type: ADD_TIME_SIGNATURE,
-  payload: { [timeSignature.id]: timeSignature },
-})
+  payload: { [timeSignature.id]: timeSignature }
+});
 
-export const deleteTimeSignature = (timeSignature) => ({
+export const deleteTimeSignature = timeSignature => ({
   type: DELETE_TIME_SIGNATURE,
-  payload: timeSignature,
-})
+  payload: timeSignature
+});
 
-export const initialState = {}
+export const initialState = {};
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_TIME_SIGNATURE:
-      return { ...state, ...payload }
+      return { ...state, ...payload };
     case DELETE_TIME_SIGNATURE:
-      const ids = Object.keys(state).filter(id => id !== payload.id)
-      return ids.reduce(((acc, id) => {
-        acc[id] = state[id]
-        return acc
-      }), {})
+      const ids = Object.keys(state).filter(id => id !== payload.id);
+      return ids.reduce((acc, id) => {
+        acc[id] = state[id];
+        return acc;
+      }, {});
     default:
-      return state
+      return state;
   }
-}
+};

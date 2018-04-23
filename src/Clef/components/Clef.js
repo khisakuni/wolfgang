@@ -1,30 +1,30 @@
-import React, { Component } from 'react'
-import models from '../../models'
+import React, { Component } from "react";
+import models from "../../models";
 
 class Clef extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.clef = new models.Clef()
+    this.clef = new models.Clef();
   }
 
   componentDidMount() {
-    this.clef = new models.Clef({ id: this.clef.id, ...this.props })
-    this.props.addClef(this.clef)
+    this.clef = new models.Clef({ id: this.clef.id, ...this.props });
+    this.props.addClef(this.clef);
   }
 
   componentWillUnmount() {
-    this.props.deleteClef(this.clef)
+    this.props.deleteClef(this.clef);
   }
 
   render() {
-    return (<div />)
+    return <div />;
   }
 }
 
 Clef.defaultProps = {
   addClef: () => {},
-  deleteClef: () => {},
-}
+  deleteClef: () => {}
+};
 
-export default Clef
+export default Clef;

@@ -1,6 +1,6 @@
-import { connect } from 'react-redux'
-import Rendering from './Rendering'
+import { connect } from "react-redux";
+import Rendering from "./Rendering";
 
-const mapStateToProps = state => state
+const mapStateToProps = state => state;
 
-export default connect(mapStateToProps)(Rendering)
+export default connect(mapStateToProps)(Rendering);

@@ -1,35 +1,45 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
-import { Score, Sheet, Staff, Measure, Voice, Note, Clef, TimeSignature } from '../../src'
+import React, { Component } from "react";
+import { render } from "react-dom";
+import {
+  Score,
+  Sheet,
+  Staff,
+  Measure,
+  Voice,
+  Note,
+  Clef,
+  TimeSignature
+} from "../../src";
 
 class Demo extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       changeNote: false,
       showVoice: false,
       showMeasure: false,
-      clef: 'treble',
-      timeSignature: '4/4',
-    }
-    this.changeNote = this.changeNote.bind(this)
-    this.showVoice = this.showVoice.bind(this)
-    this.renderVoice = this.renderVoice.bind(this)
-    this.showMeasure = this.showMeasure.bind(this)
-    this.renderMeasure = this.renderMeasure.bind(this)
-    this.showStaff = this.showStaff.bind(this)
-    this.renderStaff = this.renderStaff.bind(this)
-    this.changeClef = this.changeClef.bind(this)
-    this.changeTimeSignature = this.changeTimeSignature.bind(this)
+      clef: "treble",
+      timeSignature: "4/4",
+      showNoteColor: false
+    };
+    this.changeNote = this.changeNote.bind(this);
+    this.showVoice = this.showVoice.bind(this);
+    this.renderVoice = this.renderVoice.bind(this);
+    this.showMeasure = this.showMeasure.bind(this);
+    this.renderMeasure = this.renderMeasure.bind(this);
+    this.showStaff = this.showStaff.bind(this);
+    this.renderStaff = this.renderStaff.bind(this);
+    this.changeClef = this.changeClef.bind(this);
+    this.changeTimeSignature = this.changeTimeSignature.bind(this);
   }
 
   changeNote() {
-    this.setState({ changeNote: !this.state.changeNote })
+    this.setState({ changeNote: !this.state.changeNote });
   }
 
   showVoice() {
-    this.setState({ showVoice: !this.state.showVoice })
+    this.setState({ showVoice: !this.state.showVoice });
   }
 
   renderVoice() {
@@ -38,12 +48,12 @@ class Demo extends Component {
         <Voice>
           <Note value="a/3" duration="w" />
         </Voice>
-      )
+      );
     }
   }
 
   showMeasure() {
-    this.setState({ showMeasure: !this.state.showMeasure })
+    this.setState({ showMeasure: !this.state.showMeasure });
   }
 
   renderMeasure() {
@@ -55,12 +65,12 @@ class Demo extends Component {
             <Note duration="h" value="c/4" />
           </Voice>
         </Measure>
-      )
+      );
     }
   }
 
   showStaff() {
-    this.setState({ showStaff: !this.state.showStaff })
+    this.setState({ showStaff: !this.state.showStaff });
   }
 
   renderStaff() {
@@ -75,56 +85,84 @@ class Demo extends Component {
             </Voice>
           </Measure>
         </Staff>
-      )
+      );
     }
   }
 
   changeClef() {
-    if (this.state.clef === 'treble') {
-      this.setState({ clef: 'bass' })
+    if (this.state.clef === "treble") {
+      this.setState({ clef: "bass" });
     } else {
-      this.setState({ clef: 'treble' })
+      this.setState({ clef: "treble" });
     }
   }
 
   changeTimeSignature() {
-    if (this.state.timeSignature === '4/4') {
-      this.setState({ timeSignature: '2/2' })
+    if (this.state.timeSignature === "4/4") {
+      this.setState({ timeSignature: "2/2" });
     } else {
-      this.setState({ timeSignature: '4/4' })
+      this.setState({ timeSignature: "4/4" });
     }
   }
 
   render() {
-    return <div>
-      <h1>schubert Demo</h1>
-      <button onClick={this.changeNote}>Change note</button>
-      <button onClick={this.showVoice}>Show Voice</button>
-      <button onClick={this.showMeasure}>Show Measure</button>
-      <button onClick={this.showStaff}>Show Staff</button>
-      <button onClick={this.changeClef}>Change Clef</button>
-      <button onClick={this.changeTimeSignature}>Change Time Signature</button>
-      <Score>
-        <Sheet>
-          <Staff>
-            <Measure>
-              <Clef type={this.state.clef} />
-              <TimeSignature value={this.state.timeSignature} />
-              <Voice>
-                <Note value={this.state.changeNote ? 'b/4' : 'c/4'} duration="q" />
-                <Note value="f/4" duration="q" />
-                <Note value="g/4" duration="q" />
-                <Note value="c/4" duration="q" />
-              </Voice>
-              {this.renderVoice()}
-            </Measure>
-            {this.renderMeasure()}
-          </Staff>
-          {this.renderStaff()}
-        </Sheet>
-      </Score>
-    </div>
+    return (
+      <div>
+        <h1>schubert Demo</h1>
+        <button onClick={this.changeNote}>Change note</button>
+        <button onClick={this.showVoice}>Show Voice</button>
+        <button onClick={this.showMeasure}>Show Measure</button>
+        <button onClick={this.showStaff}>Show Staff</button>
+        <button onClick={this.changeClef}>Change Clef</button>
+        <button onClick={this.changeTimeSignature}>
+          Change Time Signature
+        </button>
+        <Score>
+          <Sheet>
+            <Staff>
+              <Measure>
+                <Clef type={this.state.clef} />
+                <TimeSignature value={this.state.timeSignature} />
+                <Voice>
+                  <Note
+                    value={this.state.changeNote ? "b/4" : "c/4"}
+                    duration="q"
+                    style={{ color: this.state.changeNote ? "blue" : "#000" }}
+                    onClick={() => console.log("first!")}
+                  />
+                  <Note
+                    value="f/4"
+                    duration="q"
+                    style={{
+                      color: this.state.showNoteColor ? "blue" : "#000"
+                    }}
+                    onMouseEnter={() => {
+                      this.setState({ showNoteColor: true });
+                    }}
+                    onMouseLeave={() => {
+                      this.setState({ showNoteColor: false });
+                    }}
+                  />
+                  <Note value="g/4" duration="q" />
+                  <Note
+                    value="c/4"
+                    duration="q"
+                    style={{ color: "blue" }}
+                    onClick={() => {
+                      console.log("last!");
+                    }}
+                  />
+                </Voice>
+                {this.renderVoice()}
+              </Measure>
+              {this.renderMeasure()}
+            </Staff>
+            {this.renderStaff()}
+          </Sheet>
+        </Score>
+      </div>
+    );
   }
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector("#demo"));

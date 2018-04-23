@@ -1,33 +1,37 @@
-import React from 'react'
-import { shallow } from 'enzyme'
-import sinon from 'sinon'
-import TimeSignature from './TimeSignature'
-import models from '../../models'
+import React from "react";
+import { shallow } from "enzyme";
+import sinon from "sinon";
+import TimeSignature from "./TimeSignature";
+import models from "../../models";
 
-describe('<TimeSignature />', () => {
-  it('calls componentDidMount', () => {
-    sinon.spy(TimeSignature.prototype, 'componentDidMount')
-    const wrapper = shallow(<TimeSignature />)
+describe("<TimeSignature />", () => {
+  it("calls componentDidMount", () => {
+    sinon.spy(TimeSignature.prototype, "componentDidMount");
+    const wrapper = shallow(<TimeSignature />);
 
-    expect(TimeSignature.prototype.componentDidMount.calledOnce).toBe(true)
-  })
+    expect(TimeSignature.prototype.componentDidMount.calledOnce).toBe(true);
+  });
 
-  it('calls componentWillUnmount', () => {
-    sinon.spy(TimeSignature.prototype, 'componentWillUnmount')
-    shallow(<TimeSignature />).unmount()
+  it("calls componentWillUnmount", () => {
+    sinon.spy(TimeSignature.prototype, "componentWillUnmount");
+    shallow(<TimeSignature />).unmount();
 
-    expect(TimeSignature.prototype.componentWillUnmount.calledOnce).toBe(true)
-  })
+    expect(TimeSignature.prototype.componentWillUnmount.calledOnce).toBe(true);
+  });
 
-  it('calls props.addTimeSignature', () => {
-    const addTimeSignature = timeSignature => expect(timeSignature.constructor).toBe(models.TimeSignature)
+  it("calls props.addTimeSignature", () => {
+    const addTimeSignature = timeSignature =>
+      expect(timeSignature.constructor).toBe(models.TimeSignature);
 
-    shallow(<TimeSignature addTimeSignature={addTimeSignature} />)
-  })
+    shallow(<TimeSignature addTimeSignature={addTimeSignature} />);
+  });
 
-  it('calls props.deleteTimeSignature', () => {
-    const deleteTimeSignature = timeSignature => expect(timeSignature.constructor).toBe(models.TimeSignature)
+  it("calls props.deleteTimeSignature", () => {
+    const deleteTimeSignature = timeSignature =>
+      expect(timeSignature.constructor).toBe(models.TimeSignature);
 
-    shallow(<TimeSignature deleteTimeSignature={deleteTimeSignature} />).unmount()
-  })
-})
+    shallow(
+      <TimeSignature deleteTimeSignature={deleteTimeSignature} />
+    ).unmount();
+  });
+});

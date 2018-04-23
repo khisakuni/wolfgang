@@ -1,10 +1,10 @@
-import Note from './note'
-import Voice from './voice'
-import Measure from './measure'
-import Staff from './staff'
-import Sheet from './sheet'
-import Clef from './clef'
-import TimeSignature from './time-signature'
+import Note from "./note";
+import Voice from "./voice";
+import Measure from "./measure";
+import Staff from "./staff";
+import Sheet from "./sheet";
+import Clef from "./clef";
+import TimeSignature from "./time-signature";
 
 export default {
   Note,
@@ -13,6 +13,5 @@ export default {
   Staff,
   Sheet,
   Clef,
-  TimeSignature,
-}
-
+  TimeSignature
+};

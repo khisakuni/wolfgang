@@ -1,25 +1,16 @@
-import React, { Component } from "react";
-import Vex from "vexflow";
-import { sheetsForScore } from "./selectors";
+import React, { Component } from 'react';
+import Vex from 'vexflow';
+import { sheetsForScore } from './selectors';
 
 export default class Rendering extends Component {
   componentDidUpdate() {
-    const {
-      sheets,
-      measures,
-      voices,
-      notes,
-      clefs,
-      timeSignatures
-    } = this.props;
-
-    const renderingEl = document.getElementById("rendering");
+    const renderingEl = document.getElementById('rendering');
     while (renderingEl.firstChild) {
       renderingEl.removeChild(renderingEl.firstChild);
     }
     sheetsForScore(this.props).forEach(sheet => {
-      const newEl = document.createElement("div");
-      newEl.setAttribute("id", sheet.id);
+      const newEl = document.createElement('div');
+      newEl.setAttribute('id', sheet.id);
       renderingEl.appendChild(newEl);
       const renderer = new Vex.Flow.Renderer(
         newEl,
@@ -27,6 +18,9 @@ export default class Rendering extends Component {
       );
       renderer.resize(sheet.height, sheet.width);
       const context = renderer.getContext();
+
+      const svg = context.svg;
+      svg.style.pointerEvents = 'bounding-box';
 
       sheet.staves.forEach(staff => {
         staff.measures.forEach(measure => {
@@ -42,25 +36,27 @@ export default class Rendering extends Component {
             m.addTimeSignature(timeSignature.value);
           });
 
-          const voices = [];
-          measure.voices.forEach(voice => {
+          const voices = measure.voices.map(voice => {
             const v = new Vex.Flow.Voice({
-              clef: "treble",
+              clef: 'treble',
               num_beats: voice.numBeats,
               beat_value: voice.beatValue
             });
 
-            const notes = [];
-            voice.notes.forEach(note => {
-              notes.push(
-                new Vex.Flow.StaveNote({
-                  keys: [note.value],
-                  duration: note.duration
-                })
-              );
+            const notes = voice.notes.map(note => {
+              const n = new Vex.Flow.StaveNote({
+                keys: [note.value],
+                duration: note.duration,
+                onClick: note.onClick
+              });
+              n.setStyle({
+                fillStyle: note.style.color,
+                strokeStyle: note.style.color
+              });
+              return n;
             });
             v.addTickables(notes);
-            voices.push(v);
+            return v;
           });
 
           m.setContext(context).draw();
@@ -70,8 +66,19 @@ export default class Rendering extends Component {
             const formatter = new Vex.Flow.Formatter()
               .joinVoices(voices)
               .format(voices, measure.width - offset);
-            voices.forEach(voice => {
+            voices.forEach((voice, i) => {
               voice.draw(context, m);
+
+              voice.tickables.forEach((t, j) => {
+                const n = measure.voices[i].notes[j];
+                t.attrs.el.onclick = n.onClick;
+                t.attrs.el.onmouseover = n.onHover;
+                t.attrs.el.onmouseenter = n.onMouseEnter;
+                t.attrs.el.onmouseleave = n.onMouseLeave;
+                if (n.hover) {
+                  t.attrs.el.dispatchEvent(new Event('mouseenter'));
+                }
+              });
             });
           }
         });

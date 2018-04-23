@@ -1,7 +1,7 @@
-import _ from 'lodash'
+import _ from "lodash";
 
 export default function Clef(params = {}) {
-  this.id = _.uniqueId('clef_')
-  this.measureId = params.measureId
-  this.type = params.type
+  this.id = _.uniqueId("clef_");
+  this.measureId = params.measureId;
+  this.type = params.type;
 }

@@ -1,33 +1,31 @@
-import React, { Component } from 'react'
-import _ from 'lodash'
-import models from '../../models'
+import React, { Component } from "react";
+import _ from "lodash";
+import models from "../../models";
 
 class Note extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.note = new models.Note()
+    this.note = new models.Note();
   }
 
-	componentDidMount() {
-    this.note = new models.Note({ id: this.note.id, ...this.props })
-    this.props.addNote(this.note)
-	}
+  componentDidMount() {
+    this.note = new models.Note({ id: this.note.id, ...this.props });
+    this.props.addNote(this.note);
+  }
 
   componentWillUnmount() {
-    this.props.deleteNote(this.note)
+    this.props.deleteNote(this.note);
   }
 
   render() {
-    return (
-      <div />
-    )
+    return <div />;
   }
 }
 
 Note.defaultProps = {
   addNote: () => {},
-  deleteNote: () => {},
-}
+  deleteNote: () => {}
+};
 
-export default Note
+export default Note;

@@ -1,11 +1,11 @@
-import { connect } from 'react-redux'
-import Clef from './components/Clef'
-import { addClef, deleteClef } from '../reducers/clefs'
+import { connect } from "react-redux";
+import Clef from "./components/Clef";
+import { addClef, deleteClef } from "../reducers/clefs";
 
-const mapStateToProps = ({ clefs }) => ({ clefs })
+const mapStateToProps = ({ clefs }) => ({ clefs });
 const mapDispatchToProps = {
   addClef,
-  deleteClef,
-}
+  deleteClef
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Clef)
+export default connect(mapStateToProps, mapDispatchToProps)(Clef);

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 import {
   Score,
   Sheet,
@@ -9,7 +9,7 @@ import {
   Note,
   Clef,
   TimeSignature
-} from "../../src";
+} from '../../src';
 
 class Demo extends Component {
   constructor(props) {
@@ -19,8 +19,8 @@ class Demo extends Component {
       changeNote: false,
       showVoice: false,
       showMeasure: false,
-      clef: "treble",
-      timeSignature: "4/4",
+      clef: 'treble',
+      timeSignature: '4/4',
       showNoteColor: false
     };
     this.changeNote = this.changeNote.bind(this);
@@ -90,18 +90,18 @@ class Demo extends Component {
   }
 
   changeClef() {
-    if (this.state.clef === "treble") {
-      this.setState({ clef: "bass" });
+    if (this.state.clef === 'treble') {
+      this.setState({ clef: 'bass' });
     } else {
-      this.setState({ clef: "treble" });
+      this.setState({ clef: 'treble' });
     }
   }
 
   changeTimeSignature() {
-    if (this.state.timeSignature === "4/4") {
-      this.setState({ timeSignature: "2/2" });
+    if (this.state.timeSignature === '4/4') {
+      this.setState({ timeSignature: '2/2' });
     } else {
-      this.setState({ timeSignature: "4/4" });
+      this.setState({ timeSignature: '4/4' });
     }
   }
 
@@ -120,21 +120,21 @@ class Demo extends Component {
         <Score>
           <Sheet>
             <Staff>
-              <Measure>
+              <Measure onClick={() => console.log('clicking measure!')}>
                 <Clef type={this.state.clef} />
                 <TimeSignature value={this.state.timeSignature} />
                 <Voice>
                   <Note
-                    value={this.state.changeNote ? "b/4" : "c/4"}
+                    value={this.state.changeNote ? 'b/4' : 'c/4'}
                     duration="q"
-                    style={{ color: this.state.changeNote ? "blue" : "#000" }}
-                    onClick={() => console.log("first!")}
+                    style={{ color: this.state.changeNote ? 'blue' : '#000' }}
+                    onClick={() => console.log('first!')}
                   />
                   <Note
                     value="f/4"
                     duration="q"
                     style={{
-                      color: this.state.showNoteColor ? "blue" : "#000"
+                      color: this.state.showNoteColor ? 'blue' : '#000'
                     }}
                     onMouseEnter={() => {
                       this.setState({ showNoteColor: true });
@@ -147,9 +147,9 @@ class Demo extends Component {
                   <Note
                     value="c/4"
                     duration="q"
-                    style={{ color: "blue" }}
+                    style={{ color: 'blue' }}
                     onClick={() => {
-                      console.log("last!");
+                      console.log('last!');
                     }}
                   />
                 </Voice>
@@ -165,4 +165,4 @@ class Demo extends Component {
   }
 }
 
-render(<Demo />, document.querySelector("#demo"));
+render(<Demo />, document.querySelector('#demo'));

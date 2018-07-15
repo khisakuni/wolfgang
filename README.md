@@ -1,7 +1,8 @@
 # Wolfgang
 
 [![CircleCI][build-badge]][build]
-[![wolfgang][npm-package]][npm]
+[![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/wolfgang)
+
 
 musical notation components built on top of [vexflow](https://github.com/0xfe/vexflow).
 

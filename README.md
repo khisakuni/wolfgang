@@ -1,7 +1,7 @@
 # Wolfgang
 
 [![CircleCI][build-badge]][build]
-[![npm package][npm-badge]][npm]
+[![npm package][wolfgang]][npm]
 
 musical notation components built on top of [vexflow](https://github.com/0xfe/vexflow).
 
@@ -15,7 +15,7 @@ musical notation components built on top of [vexflow](https://github.com/0xfe/ve
 
 ## install
 ```
-yarn add schubert
+yarn add wolfgang
 ```
 
 ## basic usage

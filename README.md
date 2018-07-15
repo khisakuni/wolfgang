@@ -1,7 +1,7 @@
 # Wolfgang
 
 [![CircleCI][build-badge]][build]
-[![npm package][wolfgang]][npm]
+[![wolfgang][npm-package]][npm]
 
 musical notation components built on top of [vexflow](https://github.com/0xfe/vexflow).
 
